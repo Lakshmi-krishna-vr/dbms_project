@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Search Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <!-- Profile and Search buttons at top-left -->
+        <button id="profile-btn" class="top-left-btn" onclick="location.href='profile.html'" aria-label="Open profile">Profile</button>
+        <button id="search-btn" class="top-left-btn" onclick="location.href='search.html'" aria-label="Open search">Search</button>
+
+        <nav>
+            
+           
+            <span class="logo">UNIVERSITY</span>
+        </nav>
+    </header>
+
+    <main class="dashboard-container">
+        <aside class="filters">
+            <h2>Skill Filters</h2>
+            <div class="filter-group">
+                <label><input type="checkbox" checked> Coding (278)</label>
+                <label><input type="checkbox"> Design (143k)</label>
+                <label><input type="checkbox"> Marketing (258k)</label>
+            </div>
+
+            <hr>
+
+            <h2>Institutional Filter</h2>
+            <select><option>Universities</option></select>
+            <select><option>Chictons</option></select>
+        </aside>
+
+        <section class="results-area">
+            <!-- removed the search bar from the main page as requested -->
+
+            <div class="cards-grid" id="students-grid">
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

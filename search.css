@@ -1,0 +1,41 @@
+/* Basic layout */
+body { font-family: Arial, sans-serif; margin: 0; background: #fafafa; color:#222; }
+.search-header { display:flex; align-items:center; gap:12px; padding:12px 16px; background:var(--primary-purple); color:var(--primary-contrast); box-shadow:0 1px 3px rgba(0,0,0,0.06); }
+.search-header button { background: rgba(255,255,255,0.12); color:var(--primary-contrast); border:none; padding:8px 10px; border-radius:6px; cursor:pointer; }
+.search-main { padding:20px; max-width:980px; margin:0 auto; }
+
+.search-box { display:flex; gap:12px; align-items:center; }
+/* search input grows, filter placed to the right of input */
+#main-search { flex:1; padding:10px 12px; border:1px solid #ccc; border-radius:6px; font-size:16px; }
+#do-search { padding:10px 14px; background:var(--primary-purple); color:var(--primary-contrast); border:none; border-radius:6px; cursor:pointer; }
+#do-search:hover { filter:brightness(0.95); }
+
+/* Filter container */
+.filter-container { position:relative; }
+#filter-btn { padding:10px 12px; border:1px solid #ccc; background:#fff; border-radius:6px; cursor:pointer; }
+.filter-dropdown {
+  position:absolute;
+  right:0;
+  top: calc(100% + 8px);
+  width: 260px;
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:8px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.08);
+  padding:12px;
+  display:none;
+  z-index: 50;
+}
+.filter-dropdown.open { display:block; }
+.filter-list { display:flex; flex-direction:column; gap:8px; max-height:240px; overflow:auto; padding-right:6px; }
+.filter-list label { font-size:14px; display:flex; gap:8px; align-items:center; }
+.filter-actions { display:flex; justify-content:space-between; margin-top:10px; }
+.filter-actions button { padding:6px 10px; border-radius:6px; border:1px solid #ccc; background:#fff; cursor:pointer; }
+.filter-actions #apply-filters { background:var(--primary-purple); color:var(--primary-contrast); border:none; }
+.results-area { margin-top:20px; background:#fff; padding:12px; border-radius:8px; min-height:120px; border:1px solid #eee; }
+
+/* use a purple theme consistent with index */
+:root {
+  --primary-purple: #6f42c1;
+  --primary-contrast: #ffffff;
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Search — Skills</title>
+  <link rel="stylesheet" href="search.css">
+</head>
+<body>
+  <header class="search-header">
+    <button onclick="location.href='index.html'">Back</button>
+    <h1>Search</h1>
+  </header>
+
+  <main class="search-main">
+    <div class="search-box">
+      <input id="main-search" type="text" placeholder="Search skills or students...">
+      <div class="filter-container">
+        <button id="filter-btn" aria-haspopup="true" aria-expanded="false">Filters ▾</button>
+        <div id="filter-dropdown" class="filter-dropdown" role="menu" aria-hidden="true">
+          <div class="filter-list">
+            <label><input type="checkbox" value="Design"> Design</label>
+            <label><input type="checkbox" value="Python"> Python</label>
+            <label><input type="checkbox" value="C"> C</label>
+            <label><input type="checkbox" value="C++"> C++</label>
+            <label><input type="checkbox" value="HTML"> HTML</label>
+            <label><input type="checkbox" value="ML"> ML</label>
+            <label><input type="checkbox" value="Backend"> Backend</label>
+            <label><input type="checkbox" value="Cybersecurity"> Cybersecurity</label>
+            <label><input type="checkbox" value="Data Analyst"> Data Analyst</label>
+            <label><input type="checkbox" value="Debugger"> Debugger</label>
+            <label><input type="checkbox" value="Fullstack"> Fullstack</label>
+          </div>
+
+          <div class="filter-actions">
+            <button id="apply-filters">Apply</button>
+            <button id="clear-filters">Clear</button>
+          </div>
+        </div>
+      </div>
+      <button id="do-search">Search</button>
+    </div>
+
+    <section id="results" class="results-area">
+      <!-- results or selected filters will be shown here -->
+    </section>
+  </main>
+
+  <script src="search.js"></script>
+</body>
+</html>
