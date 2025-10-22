@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Profile — MOHAMMED FAIZ</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="" crossorigin="anonymous">
+
+  <style>
+    /* Page-specific: force bottom nav to span full width on all screen ratios (desktop & mobile) */
+    .bottom-nav{
+      position:fixed;
+      left:0 !important;
+      right:0 !important;
+      bottom:0 !important;
+      width:100% !important;
+      margin:0 !important;
+      border-radius:0 !important;
+      padding:8px 12px !important;
+      box-shadow:0 -6px 30px rgba(0,0,0,0.6);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:6px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
+      backdrop-filter: blur(6px);
+      z-index:9999;
+    }
+    .bottom-nav .nav-item { flex:1; text-align:center; padding:8px 6px; border-radius:6px; color:var(--muted); }
+    .bottom-nav .nav-item i{ display:block; margin:0 auto 4px; font-size:18px; }
+    .bottom-nav .nav-item.active{ background: rgba(155,108,255,0.12); color:var(--text); }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="card profile-card" aria-labelledby="profile-heading">
+      <div class="card-banner"></div>
+
+      <div class="avatar-wrap">
+        <div class="avatar">
+          <i class="fa-solid fa-user"></i>
+        </div>
+      </div>
+
+      <div class="card-content">
+        <div class="profile-head">
+          <div class="profile-name">
+            <h1 id="profile-heading">MOHAMMED FAIZ</h1>
+            <p class="muted">Saintgits College of Engineering</p>
+          </div>
+          <div class="profile-actions">
+            <a class="btn btn-secondary" href="edit-profile.html">Edit Profile</a>
+          </div>
+        </div>
+
+        <p class="bio">A curious and driven student with interests in product design, entrepreneurship, and full‑stack development. Loves building small projects and learning new technologies.</p>
+
+        <h3 class="section-title">Skills</h3>
+        <div class="skills">
+          <span class="skill"><i class="fa-solid fa-lightbulb"></i> ENTREPRENEURSHIP</span>
+          <span class="skill"><i class="fa-solid fa-code"></i> PROGRAMMING LANGUAGES</span>
+          <span class="skill"><i class="fa-solid fa-pencil-ruler"></i> PRODUCT DESIGN</span>
+          <span class="skill"><i class="fa-solid fa-chart-line"></i> DATA ANALYSIS</span>
+        </div>
+
+        <h3 class="section-title">Github</h3>
+        <div class="github-grid" aria-hidden="true">
+          <div class="grid">
+            <script>
+              const frag = document.createDocumentFragment();
+              for (let i=0;i<70;i++){
+                const d = document.createElement('div');
+                d.className='sq';
+                frag.appendChild(d);
+              }
+              document.currentScript.parentNode.appendChild(frag);
+            </script>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" role="navigation" aria-label="Primary">
+    <a href="index.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Home</span></a>
+    <a href="#" class="nav-item"><i class="fa-solid fa-compass"></i><span>Explore</span></a>
+    <a href="#" class="nav-item"><i class="fa-solid fa-folder"></i><span>Projects</span></a>
+    <a href="profile.html" class="nav-item active"><i class="fa-solid fa-user"></i><span>Profile</span></a>
+  </nav>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Edit Profile — MOHAMMED FAIZ</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="" crossorigin="anonymous">
+
+  <style>
+    /* page-specific overrides:
+       - remove any local "options" control if still present
+       - force bottom navigation to span full width on all screen ratios
+    */
+    .save-options { display: none !important; }
+
+    .bottom-nav{
+      position:fixed;
+      left:0 !important;
+      right:0 !important;
+      bottom:0 !important;
+      width:100% !important;
+      margin:0 !important;
+      border-radius:0 !important;
+      padding:8px 16px !important;
+      box-shadow:0 -6px 30px rgba(0,0,0,0.6);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.2));
+      backdrop-filter: blur(6px);
+      z-index:9999;
+    }
+
+    /* keep nav items readable when stretched */
+    .bottom-nav .nav-item { flex:1; text-align:center; padding:10px 6px; border-radius:6px; }
+    .bottom-nav .nav-item i{ display:block; margin:0 auto 4px; font-size:18px; }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="card edit-card" aria-labelledby="edit-heading">
+      <div class="card-banner small"></div>
+
+      <div class="card-content">
+        <h1 id="edit-heading">Edit Your Profile</h1>
+
+        <form class="edit-form" action="#" method="post" novalidate>
+          <label>
+            <span class="label">Full Name</span>
+            <input type="text" name="fullname" value="MOHAMMED FAIZ" required>
+          </label>
+
+          <label>
+            <span class="label">Phone Number</span>
+            <input type="tel" name="phone" placeholder="+91 98765 43210">
+          </label>
+
+          <label>
+            <span class="label">Email ID</span>
+            <input type="email" name="email" value="faiz@example.com" required>
+          </label>
+
+          <label>
+            <span class="label">Year of Study</span>
+            <input type="number" name="year" min="1" max="10" value="3">
+          </label>
+
+          <label>
+            <span class="label">Bio</span>
+            <textarea name="bio" rows="4">A curious and driven student with interests in product design, entrepreneurship, and full‑stack development.</textarea>
+          </label>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+            <a class="btn btn-secondary" href="profile.html"><i class="fa-solid fa-ban"></i> Cancel</a>
+          </div>
+
+          <!-- details/options removed as requested -->
+
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" role="navigation" aria-label="Primary">
+    <a href="index.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Home</span></a>
+    <a href="#" class="nav-item"><i class="fa-solid fa-compass"></i><span>Explore</span></a>
+    <a href="#" class="nav-item"><i class="fa-solid fa-folder"></i><span>Projects</span></a>
+    <a href="profile.html" class="nav-item"><i class="fa-solid fa-user"></i><span>Profile</span></a>
+  </nav>
+</body>
+</html>

@@ -1,0 +1,134 @@
+:root{
+  --bg: #0f0420;           /* very dark purple */
+  --card: #221033;         /* slightly lighter card */
+  --accent: #9b6cff;       /* light purple banner / primary */
+  --text: #f3eefc;         /* primary text */
+  --muted: #cbbff0;
+  --pill-radius: 999px;
+  --max-width: 920px;
+  --gap: 14px;
+  --nav-height: 62px;
+}
+
+/* global */
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+body{background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased;}
+.app{min-height:100vh;padding:16px;padding-bottom: calc(var(--nav-height) + 24px); display:flex; align-items:center; justify-content:center;}
+
+/* Card base */
+.card{
+  width: min(96vw, var(--max-width));
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+/* banner */
+.card-banner{
+  height:96px;
+  background: linear-gradient(90deg, rgba(155,108,255,0.95), rgba(145,90,255,0.85));
+}
+.card-banner.small{height:68px}
+
+/* profile card layout */
+.profile-card{ position:relative; padding-bottom: 20px; }
+.avatar-wrap{ position:relative; display:flex; justify-content:center; margin-top:-60px; pointer-events:none;}
+.avatar{
+  width:120px; height:120px; border-radius:50%; background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.12)); display:flex; align-items:center; justify-content:center;
+  border:6px solid var(--card);
+  color:var(--muted); font-size:44px;
+  box-shadow:0 8px 22px rgba(0,0,0,0.6);
+}
+
+/* card content */
+.card-content{ padding:20px 20px 28px; }
+.profile-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.profile-name h1{ margin:0; font-size:1.15rem; letter-spacing:0.06em; }
+.muted{ color:var(--muted); margin:6px 0 0 0; font-size:0.92rem; }
+
+.bio{ margin:16px 0; color:var(--muted); line-height:1.45; }
+
+/* actions */
+.btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:var(--pill-radius); text-decoration:none; font-weight:600; cursor:pointer; border:0; }
+.btn-primary{ background:var(--accent); color:var(--text); box-shadow: 0 6px 18px rgba(155,108,255,0.12); }
+.btn-secondary{ background:var(--text); color:var(--card); padding:10px 16px; }
+
+/* skills */
+.section-title{ margin:10px 0 8px 0; color:var(--text); font-size:0.95rem; }
+.skills{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+.skill{ background: rgba(255,255,255,0.03); color:var(--text); padding:8px 12px; border-radius:999px; font-size:0.82rem; display:inline-flex; gap:8px; align-items:center; }
+
+/* github grid */
+.github-grid{ margin-top:8px; }
+.grid{ display:grid; grid-template-columns: repeat(14, 10px); gap:6px; align-items:center; }
+.grid .sq{ width:10px; height:10px; border-radius:2px; background: rgba(255,255,255,0.03); }
+.grid .sq:nth-child(3n){ background: rgba(155,108,255,0.18); }
+.grid .sq:nth-child(5n){ background: rgba(155,108,255,0.32); }
+.grid .sq:nth-child(7n){ background: rgba(155,108,255,0.5); }
+
+/* edit form */
+.edit-card .card-content{ padding:18px; }
+.edit-form{ display:flex; flex-direction:column; gap:12px; }
+.edit-form label{ display:flex; flex-direction:column; gap:6px; color:var(--muted); font-size:0.9rem; }
+.edit-form input, .edit-form textarea{
+  background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.04); color:var(--text); padding:10px 12px; border-radius:10px; outline:none;
+}
+.edit-form textarea{ resize:vertical; min-height:84px; }
+
+.form-actions{ display:flex; gap:12px; margin-top:8px; justify-content:flex-end; }
+.form-actions .btn-secondary{ background:var(--text); color:var(--card); }
+
+/* bottom nav */
+.bottom-nav{
+  position:fixed; left:0; right:0; bottom:0; height:var(--nav-height); background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.2));
+  display:flex; justify-content:center; align-items:center; gap:20px; padding:8px 20px; box-shadow:0 -6px 30px rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+}
+.nav-item{ color:var(--muted); text-decoration:none; display:flex; flex-direction:column; align-items:center; font-size:0.75rem; gap:6px; padding:8px 12px; border-radius:12px; }
+.nav-item i{ font-size:18px; }
+.nav-item.active{ background: rgba(155,108,255,0.12); color:var(--text); }
+
+/* mobile-first spacing fixes */
+@media (min-width:640px){
+  .card-content{ padding:28px; }
+  .avatar{ width:140px; height:140px; margin-top:8px; font-size:48px; }
+}
+
+/* Desktop: 16:9 appearance and left-aligned header */
+@media (min-width:900px){
+  .app{ padding:40px; }
+
+  /* Only the profile card becomes a horizontal 16:9 layout */
+  .profile-card{
+    display:flex;
+    align-items:stretch;
+    gap:0;
+    flex-direction:row;
+  }
+
+  .card-banner{ width:40%; height:100%; min-width:320px; border-radius:16px 0 0 16px; }
+  .avatar-wrap{ position:relative; justify-content:flex-start; margin:0; padding-left:22px; width:60%; display:flex; align-items:flex-start; }
+  .card-content{ width:60%; padding:32px; }
+  .profile-head{ align-items:flex-start; }
+  .profile-name h1{ font-size:1.6rem; }
+
+  /* enforce 16:9 feel only on the profile card */
+  .profile-card{ aspect-ratio: 16 / 9; max-width: calc(min(100vw - 120px, var(--max-width))); }
+
+  /* Keep edit-card vertically stacked and allow scrolling if content exceeds card */
+  .edit-card{
+    display:block;
+    aspect-ratio: auto;
+    max-height: calc(100vh - 120px);
+    overflow:auto;
+  }
+  .edit-card .card-content{ overflow:auto; }
+
+  .bottom-nav{ left: auto; right: auto; bottom:18px; width: min(92vw, 640px); margin:0 auto; border-radius:999px; }
+}
+
+/* small tweaks */
+a.btn:focus, button.btn:focus{ outline:2px solid rgba(155,108,255,0.35); outline-offset:3px; }
