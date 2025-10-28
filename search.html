@@ -3,48 +3,125 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Search — Skills</title>
-  <link rel="stylesheet" href="search.css">
-</head>
+  <title>Search Users</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css"> <link rel="stylesheet" href="search.css"> </head>
 <body>
-  <header class="search-header">
-    <button onclick="location.href='index.html'">Back</button>
-    <h1>Search</h1>
+
+  <header class="page-header">
+    <a href="index.html" class="btn-back">
+        <i class="fa-solid fa-chevron-left"></i>
+        <span>Home</span>
+    </a>
+    <h1>Search Users</h1>
   </header>
 
-  <main class="search-main">
-    <div class="search-box">
-      <input id="main-search" type="text" placeholder="Search skills or students...">
-      <div class="filter-container">
-        <button id="filter-btn" aria-haspopup="true" aria-expanded="false">Filters ▾</button>
-        <div id="filter-dropdown" class="filter-dropdown" role="menu" aria-hidden="true">
-          <div class="filter-list">
-            <label><input type="checkbox" value="Design"> Design</label>
-            <label><input type="checkbox" value="Python"> Python</label>
-            <label><input type="checkbox" value="C"> C</label>
-            <label><input type="checkbox" value="C++"> C++</label>
-            <label><input type="checkbox" value="HTML"> HTML</label>
-            <label><input type="checkbox" value="ML"> ML</label>
-            <label><input type="checkbox" value="Backend"> Backend</label>
-            <label><input type="checkbox" value="Cybersecurity"> Cybersecurity</label>
-            <label><input type="checkbox" value="Data Analyst"> Data Analyst</label>
-            <label><input type="checkbox" value="Debugger"> Debugger</label>
-            <label><input type="checkbox" value="Fullstack"> Fullstack</label>
-          </div>
+  <main class="search-page-container">
 
-          <div class="filter-actions">
-            <button id="apply-filters">Apply</button>
-            <button id="clear-filters">Clear</button>
+    <aside class="filter-panel" id="filter-panel">
+      <div class="filter-panel-header">
+        <h2>Filters</h2>
+        <button id="close-filter-btn" aria-label="Close filters">&times;</button>
+      </div>
+      <div class="filter-panel-content">
+        <div class="accordion">
+          <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+              <span>Institute</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+              <input type="text" class="filter-search" id="institute-filter-search" placeholder="Search institutes...">
+              <div class="filter-options" id="institute-filter-options">
+                <label><input type="checkbox" name="institute" value="all" checked> All Institutes</label>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+              <span>Branch</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+               <input type="text" class="filter-search" id="branch-filter-search" placeholder="Search branches...">
+               <div class="filter-options" id="branch-filter-options">
+                 <label><input type="checkbox" name="branch" value="all" checked> All Branches</label>
+               </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+              <span>Year</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+              <div class="filter-options" id="year-filter-options">
+                 <label><input type="checkbox" name="year" value="all" checked> All Years</label>
+                 <label><input type="checkbox" name="year" value="1"> Year 1</label>
+                 <label><input type="checkbox" name="year" value="2"> Year 2</label>
+                 <label><input type="checkbox" name="year" value="3"> Year 3</label>
+                 <label><input type="checkbox" name="year" value="4"> Year 4</label>
+                 <label><input type="checkbox" name="year" value="5"> Year 5+</label>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+              <span>Skill</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+               <input type="text" class="filter-search" id="skill-filter-search" placeholder="Search skills...">
+               <div class="filter-options" id="skill-filter-options">
+                  </div>
+               <div id="selected-skills-filter"></div>
+            </div>
           </div>
         </div>
       </div>
-      <button id="do-search">Search</button>
+      <div class="filter-panel-footer">
+        <button id="clear-filters-btn" class="btn btn-secondary">Clear All</button>
+        <button id="apply-filters-btn" class="btn btn-primary">Apply Filters</button>
+      </div>
+    </aside>
+
+    <div class="search-content">
+      <div class="search-box">
+        <i class="fa-solid fa-search search-icon"></i>
+        <input id="main-search-input" type="text" placeholder="Search by name or skill...">
+        <button id="open-filter-btn">
+            <i class="fa-solid fa-filter"></i> Filters
+        </button>
+      </div>
+
+      <section id="results-area" class="results-area">
+        <p class="empty-state">Enter a search term or apply filters to find users.</p>
+        </section>
     </div>
 
-    <section id="results" class="results-area">
-      <!-- results or selected filters will be shown here -->
-    </section>
   </main>
+
+  <nav class="bottom-nav" role="navigation" aria-label="Primary">
+    <a href="index.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Home</span></a>
+    <a href="search.html" class="nav-item active"><i class="fa-solid fa-compass"></i><span>Explore</span></a>
+    <a href="myprojects.html" class="nav-item"><i class="fa-solid fa-folder"></i><span>Projects</span></a>
+    <a href="profile.html" class="nav-item"><i class="fa-solid fa-user"></i><span>Profile</span></a>
+  </nav>
+
+  <div class="modal-overlay" id="skill-level-modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-labelledby="modal-title">
+        <h3 id="modal-title">Set minimum level for <span id="modal-skill-name">Skill</span></h3>
+        <div class="rating-dots modal-rating" id="modal-rating-dots">
+            <div class="dot" data-value="1"></div>
+            <div class="dot" data-value="2"></div>
+            <div class="dot" data-value="3"></div>
+            <div class="dot" data-value="4"></div>
+            <div class="dot" data-value="5"></div>
+        </div>
+        <span id="modal-rating-message"></span>
+        <div class="modal-actions">
+            <button id="modal-cancel-btn" class="btn btn-secondary">Cancel</button>
+            <button id="modal-confirm-btn" class="btn btn-primary">Confirm</button>
+        </div>
+    </div>
+  </div>
+
 
   <script src="search.js"></script>
 </body>

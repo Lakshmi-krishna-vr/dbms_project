@@ -1,0 +1,242 @@
+:root{
+  /* cleaned / unified variables from your inputs */
+  --bg: #1e1e2f;           /* very dark purple / page background */
+  --card: #2d2d44;         /* card background */
+  --accent: #9d6cd3;       /* primary purple */
+  --accent-strong: #9b6cff;/* alternate accent (legacy) */
+  --text: #f0f0f0;         /* primary text */
+  --muted: #cbbff0;        /* muted text */
+  --muted-2: #98a0b3;      /* secondary muted (for dates) */
+  --pill-radius: 999px;
+  --max-width: 920px;
+  --gap: 14px;
+  --nav-height: 62px;
+  --border-contrast: #3c3c5a;
+  --card-elev: 0 8px 30px rgba(0,0,0,0.5);
+}
+
+/* page base */
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  padding:20px;
+  min-height:100vh;
+}
+
+/* page wrapper and main heading */
+.myprojects-wrap{ display:flex; flex-direction:column; align-items:center; gap:18px; padding-bottom: calc(var(--nav-height) + 20px); }
+h1.myprojects-title{
+  margin:0;
+  font-size:1.6rem;
+  letter-spacing:0.06em;
+  color:var(--text);
+  text-align:center;
+}
+
+/* main listing container matches site cards */
+.myprojects-card{
+  width: min(96vw, var(--max-width));
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow: var(--card-elev);
+  border: 1px solid rgba(255,255,255,0.04);
+  padding:20px;
+}
+
+/* controls (search + add) */
+.controls{
+  display:flex;
+  gap:var(--gap);
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  margin-bottom:12px;
+}
+
+.search-wrap{
+  position:relative;
+  flex:1 1 320px;
+  min-width:160px;
+}
+
+.search-wrap i.fa-search{
+  position:absolute;
+  left:14px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--muted);
+  font-size:0.95rem;
+}
+
+.search-wrap input{
+  width:100%;
+  padding:10px 12px 10px 40px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  color:var(--text);
+  border:1px solid rgba(255,255,255,0.04);
+  border-radius:10px;
+  outline:none;
+  font-size:0.95rem;
+}
+
+/* primary button */
+.btn-add{
+  background: linear-gradient(180deg, var(--accent), var(--accent-strong));
+  color:var(--text);
+  padding:10px 16px;
+  border-radius:var(--pill-radius);
+  border:0;
+  cursor:pointer;
+  display:inline-flex;
+  gap:8px;
+  align-items:center;
+  font-weight:600;
+  box-shadow: 0 6px 18px rgba(157,108,211,0.08);
+}
+
+/* project list grid (single column stacked) */
+.project-list{
+  display:flex;
+  flex-direction:column;
+  gap:var(--gap);
+}
+
+/* individual project card (use 'card' style) */
+.project-card{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+  border-radius:12px;
+  padding:16px;
+  border:1px solid rgba(255,255,255,0.03);
+  transition: transform .14s ease, box-shadow .14s ease;
+}
+
+.project-card:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.55);
+}
+
+/* header: title + date */
+.card-header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.project-title{
+  font-size:1.05rem;
+  font-weight:700;
+  color:var(--text);
+}
+
+.project-date{
+  font-size:0.85rem;
+  color:var(--muted-2);
+  white-space:nowrap;
+}
+
+/* description */
+.project-desc{
+  color:var(--muted);
+  line-height:1.45;
+  font-size:0.95rem;
+  margin-top:4px;
+}
+
+/* footer: progress, status, avatars */
+.card-footer{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-top:4px;
+}
+
+/* progress bar */
+.progress-wrap{
+  flex:1;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+progress{
+  width:100%;
+  height:10px;
+  appearance:none;
+  border-radius:999px;
+  overflow:hidden;
+  background: rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.02);
+}
+
+/* webkit */
+progress::-webkit-progress-bar{ background: rgba(255,255,255,0.03); border-radius:999px; }
+progress::-webkit-progress-value{ background: linear-gradient(90deg, var(--accent), var(--accent-strong)); border-radius:999px; }
+
+/* firefox */
+progress::-moz-progress-bar{ background: linear-gradient(90deg, var(--accent), var(--accent-strong)); border-radius:999px; }
+
+/* status pills */
+.status-pill{
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:0.82rem;
+  font-weight:600;
+  color:var(--text);
+  white-space:nowrap;
+}
+
+/* status colours */
+.status-inprogress{ background: linear-gradient(90deg,#6f6df0,#9d6cd3); }
+.status-todo{ background: linear-gradient(90deg,#ffba66,#ff9a3d); color:#1a1320; }
+.status-done{ background: linear-gradient(90deg,#37d67a,#00c853); }
+
+/* avatars stack */
+.team-avatars{ display:flex; align-items:center; margin-left:auto; gap:0; }
+.team-avatars img{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  border:2px solid var(--card);
+  margin-left:-10px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.5);
+}
+
+/* empty / no results */
+.empty-state{
+  color:var(--muted);
+  text-align:center;
+  padding:28px 12px;
+  border-radius:10px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+  border:1px dashed rgba(255,255,255,0.02);
+}
+
+/* responsive behaviour */
+@media (max-width:820px){
+  .controls{ gap:12px; }
+  .btn-add{ padding:10px; width:100%; justify-content:center; }
+  .search-wrap{ order:1; width:100%; }
+  .controls{ flex-direction:column; align-items:stretch; }
+  .team-avatars img{ width:30px; height:30px; }
+}
+
+@media (min-width:900px){
+  .myprojects-wrap{ align-items:flex-start; }
+  h1.myprojects-title{ text-align:left; margin-left:calc((100vw - min(96vw, var(--max-width)))/2); }
+  .myprojects-card{ padding:28px 28px 32px; }
+}
+
+/* small accessibility focus states */
+button:focus, .btn-add:focus, input:focus{
+  outline: 3px solid rgba(157,108,211,0.18);
+  outline-offset:3px;
+}

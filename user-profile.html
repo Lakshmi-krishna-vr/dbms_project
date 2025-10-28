@@ -4,94 +4,102 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Profile — Loading...</title>
+
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <style>
-    /* Base styles */
+    /* Copied styles from profile.html for consistency */
     .bottom-nav{ position:fixed; left:0 !important; right:0 !important; bottom:0 !important; width:100% !important; margin:0 !important; border-radius:0 !important; padding:8px 12px !important; box-shadow:0 -6px 30px rgba(0,0,0,0.6); display:flex; justify-content:space-between;8 gap:6px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12)); backdrop-filter: blur(6px); z-index:9999; }
-    .bottom-nav .nav-item { flex:1; text-align:center; padding:8px 6px; border-radius:6px; color:var(--muted); }
+    .bottom-nav .nav-item { flex:1; text-align:center; padding:8px 6px; border-radius:6px; color:var(--muted); text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out; } /* Added link styles */
     .bottom-nav .nav-item i{ display:block; margin:0 auto 4px; font-size:18px; }
     .bottom-nav .nav-item.active{ background: rgba(155,108,255,0.12); color:var(--text); }
+    .bottom-nav .nav-item:not(.active):hover { color: var(--text); } /* Added hover */
+
     .skills .skill { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
     .skill-name { display: flex; align-items: center; gap: 10px; font-weight: 500; }
     .skill-rating-dots { display: flex; gap: 3px; }
     .skill-rating-dots .dot { width: 12px; height: 12px; border-radius: 50%; background-color: rgba(255,255,255,0.1); }
     .skill-rating-dots .dot.filled { background-color: #37d67a; }
     .loading-placeholder { color: var(--muted); text-align: center; padding: 20px; }
+
+    /* Standard page header */
     .page-header { display: flex; align-items: center; gap: 16px; padding: 14px 20px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12)); backdrop-filter: blur(6px); border-bottom: 1px solid rgba(255,255,255,0.04); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
     .page-header h1 { margin: 0; font-size: 1.5rem; color: var(--text); }
     .btn-back { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid rgba(255,255,255,0.04); padding: 8px 12px; border-radius: var(--pill-radius); cursor: pointer; font-size: 0.9rem; font-weight: 500; text-decoration: none; }
     .btn-back:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+    /* --- Page Specific Adjustments --- */
+    .profile-card {
+        /* Override the default max-width for this page */
+        width: min(96vw, 700px); /* Adjust 700px to your desired width */
+        margin: 20px auto; /* Keep it centered */
+    }
 
-    /* --- [!] Styles for Project Pills [!] --- */
-    .pill-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 8px; /* Added spacing */
-    }
-    .project-pill-link {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255, 255, 255, 0.1);
-      color: var(--text);
-      padding: 6px 12px;
-      border-radius: var(--pill-radius);
-      font-size: 0.9rem;
-      text-decoration: none; /* Remove underline */
-      transition: background-color 0.2s ease;
-    }
-    .project-pill-link:hover {
-        background-color: rgba(255, 255, 255, 0.2);
-    }
-    .project-pill-link i {
-        color: var(--accent);
-    }
-    /* --- End of new styles --- */
+     /* Project Pills styles */
+    .pill-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .project-pill-link { display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.1); color: var(--text); padding: 6px 12px; border-radius: var(--pill-radius); font-size: 0.9rem; text-decoration: none; transition: background-color 0.2s ease; }
+    .project-pill-link:hover { background-color: rgba(255, 255, 255, 0.2); }
+    .project-pill-link i { color: var(--accent); }
   </style>
 </head>
 <body>
+
   <header class="page-header">
-    <a href="index.html" class="btn-back">
-        <i class="fa-solid fa-chevron-left"></i>
-        <span>Home</span>
+    <a href="javascript:history.back()" class="btn-back"> <i class="fa-solid fa-chevron-left"></i>
+        <span>Back</span>
     </a>
-    <h1>Profile</h1>
+    <h1 id="header-user-name">User Profile</h1>
   </header>
 
   <main class="app">
     <section class="card profile-card" aria-labelledby="profile-heading">
       <div class="card-banner"></div>
+
       <div class="avatar-wrap">
-        <div class="avatar"> <i class="fa-solid fa-user"></i> </div>
+         <div class="avatar" id="profile-avatar">
+            <i class="fa-solid fa-user"></i> </div>
       </div>
+
       <div class="card-content">
         <div class="profile-head">
           <div class="profile-name">
             <h1 id="profile-heading">Loading...</h1>
             <p class="muted" id="profile-institute">Loading...</p>
           </div>
-          <div class="profile-actions">
-            <a class="btn btn-secondary" href="edit-profile.html">Edit Profile</a>
           </div>
-        </div>
+
         <p class="bio" id="profile-bio">Loading...</p>
 
         <div class="general-info">
             <h3 class="section-title">Details</h3>
             <div class="skills">
                 <span class="skill" id="profile-email">
-                    <span class="skill-name"> <i class="fa-solid fa-envelope"></i> <span>Loading...</span> </span>
+                    <span class="skill-name">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>Loading...</span>
+                    </span>
                 </span>
                 <span class="skill" id="profile-phone">
-                    <span class="skill-name"> <i class="fa-solid fa-phone"></i> <span>Loading...</span> </span>
+                    <span class="skill-name">
+                        <i class="fa-solid fa-phone"></i>
+                        <span>Loading...</span>
+                    </span>
                 </span>
                 <span class="skill" id="profile-year">
-                    <span class="skill-name"> <i class="fa-solid fa-calendar-alt"></i> <span>Loading...</span> </span>
+                    <span class="skill-name">
+                        <i class="fa-solid fa-calendar-alt"></i>
+                        <span>Loading...</span>
+                    </span>
+                </span>
+                 <span class="skill" id="profile-branch">
+                    <span class="skill-name">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <span>Loading...</span>
+                    </span>
                 </span>
             </div>
         </div>
+
 
         <h3 class="section-title">Skills</h3>
         <div class="skills" id="profile-skills-list">
@@ -102,38 +110,30 @@
         <div class="pill-container" id="profile-projects-list">
             <p class="loading-placeholder">Loading projects...</p>
         </div>
+
         <h3 class="section-title">Github</h3>
         <div class="github-grid" aria-hidden="true">
           <div class="grid">
-            <script>
+            <script> // Static grid generation
               const frag = document.createDocumentFragment();
               for (let i=0;i<70;i++){ const d = document.createElement('div'); d.className='sq'; frag.appendChild(d); }
               document.currentScript.parentNode.appendChild(frag);
             </script>
           </div>
         </div>
+      </div>
+    </section>
+  </main>
 
-        <div class="form-actions" style="margin-top: 24px; justify-content: center;">
-            <button id="logout-button" class="btn btn-secondary" style="background-color: #444; color: #eee;">
-                <i class="fa-solid fa-right-from-bracket"></i> Log Out
-            </button>
-        </div>
-
-      </div> </section> </main> <nav class="bottom-nav" role="navigation" aria-label="Primary">
+  <nav class="bottom-nav" role="navigation" aria-label="Primary">
     <a href="index.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Home</span></a>
     <a href="search.html" class="nav-item"><i class="fa-solid fa-compass"></i><span>Explore</span></a>
     <a href="myprojects.html" class="nav-item"><i class="fa-solid fa-folder"></i><span>Projects</span></a>
-    <a href="profile.html" class="nav-item active"><i class="fa-solid fa-user"></i><span>Profile</span></a>
+    <a href="profile.html" class="nav-item"><i class="fa-solid fa-user"></i><span>Profile</span></a>
   </nav>
 
   <script>
-    // --- Get Logged-in User ID ---
-    const CURRENT_USER_ID = localStorage.getItem('skillLinkUserID');
-    if (!CURRENT_USER_ID) {
-        window.location.href = 'login.html';
-    }
-
-    // --- Helper Functions ---
+    // Helper function to create skill rating dots
     function createRatingDots(rating) {
         let dotsHtml = '';
         for (let i = 1; i <= 5; i++) {
@@ -142,20 +142,48 @@
         return `<div class="skill-rating-dots">${dotsHtml}</div>`;
     }
 
-    // --- Load Profile Data ---
+    // Main function to load profile data
     async function loadProfile() {
+        // Get the user ID from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('id');
+
+        if (!userId) {
+            document.body.innerHTML = '<h1>Error: No user ID provided.</h1>';
+            return;
+        }
+
         try {
-            const response = await fetch(`/api/profile/${CURRENT_USER_ID}`);
-            if (!response.ok) { throw new Error('Failed to load profile'); }
+            const response = await fetch(`/api/profile/${userId}`);
+            if (!response.ok) {
+                throw new Error('Failed to load profile');
+            }
             const profileData = await response.json();
 
+            // Set page titles
             document.title = `Profile — ${profileData.full_name}`;
+            document.getElementById('header-user-name').textContent = `${profileData.full_name}'s Profile`;
+
+             // [!] Set Avatar Image [!]
+            const avatarDiv = document.getElementById('profile-avatar');
+            if (profileData.image) {
+                avatarDiv.innerHTML = ''; // Remove fallback icon
+                avatarDiv.style.backgroundImage = `url('${profileData.image}')`;
+                avatarDiv.style.backgroundSize = 'cover';
+                avatarDiv.style.backgroundPosition = 'center';
+            } // else it keeps the icon
+
+
+            // Fill General Info
             document.getElementById('profile-heading').textContent = profileData.full_name || 'N/A';
             document.getElementById('profile-institute').textContent = profileData.institute_name || 'No institute set';
             document.getElementById('profile-bio').textContent = profileData.bio || 'No bio set.';
+
+            // Fill Details
             document.getElementById('profile-email').querySelector('.skill-name span').textContent = profileData.email || 'No email set';
             document.getElementById('profile-phone').querySelector('.skill-name span').textContent = profileData.phone || 'No phone set';
             document.getElementById('profile-year').querySelector('.skill-name span').textContent = `Year ${profileData.year || 'N/A'}`;
+             document.getElementById('profile-branch').querySelector('.skill-name span').textContent = profileData.branch || 'No branch set'; // [!] Added branch
 
             // Fill Skills
             const skillsListDiv = document.getElementById('profile-skills-list');
@@ -177,13 +205,13 @@
                 skillsListDiv.innerHTML = '<p class="loading-placeholder">No skills added yet.</p>';
             }
 
-            // [!] UPDATED Project Filling Logic [!]
+            // Fill Projects
             const projectsListDiv = document.getElementById('profile-projects-list');
-            projectsListDiv.innerHTML = ''; // Clear loading message
+            projectsListDiv.innerHTML = '';
             if (profileData.projects && profileData.projects.length > 0) {
                 profileData.projects.forEach(project => {
                     const projectLink = document.createElement('a');
-                    projectLink.className = 'project-pill-link'; // Use new class
+                    projectLink.className = 'project-pill-link';
                     projectLink.href = `project-details.html?id=${project.id}`;
                     projectLink.innerHTML = `
                         <i class="fa-solid fa-folder"></i>
@@ -194,7 +222,6 @@
             } else {
                 projectsListDiv.innerHTML = '<p class="loading-placeholder">Not part of any projects yet.</p>';
             }
-            // End of updated block
 
         } catch (error) {
             console.error('Error loading profile:', error);
@@ -203,16 +230,9 @@
         }
     }
 
-    // --- Logout Logic ---
-    const logoutButton = document.getElementById('logout-button');
-    if (logoutButton) {
-        logoutButton.addEventListener('click', () => {
-            localStorage.removeItem('skillLinkUserID');
-            window.location.href = 'login.html';
-        });
-    }
-
-    // --- Run on page load ---
+    // Run the function when the page loads
     document.addEventListener('DOMContentLoaded', loadProfile);
-  </script> </body>
+  </script>
+
+</body>
 </html>

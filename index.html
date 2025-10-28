@@ -5,17 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skill Search Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
     <header>
-        <!-- Profile and Search buttons at top-left -->
-        <button id="profile-btn" class="top-left-btn" onclick="location.href='profile.html'" aria-label="Open profile">Profile</button>
-        <button id="search-btn" class="top-left-btn" onclick="location.href='search.html'" aria-label="Open search">Search</button>
-
         <nav>
-            
-           
-            <span class="logo">UNIVERSITY</span>
+            <a href="profile.html" class="nav-item">
+                <i class="fa-solid fa-user"></i>
+                <span>Profile</span>
+            </a>
+            <a href="search.html" class="nav-item">
+                <i class="fa-solid fa-search"></i>
+                <span>Search</span>
+            </a>
+            <a href="myprojects.html" class="nav-item">
+                <i class="fa-solid fa-folder"></i>
+                <span>Projects</span>
+            </a>
+
+            <span class="logo" id="user-institute-logo">...</span> <!-- Added ID and placeholder text -->
         </nav>
     </header>
 

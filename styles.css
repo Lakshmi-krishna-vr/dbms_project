@@ -1,134 +1,162 @@
-:root{
-  --bg: #0f0420;           /* very dark purple */
-  --card: #221033;         /* slightly lighter card */
-  --accent: #9b6cff;       /* light purple banner / primary */
-  --text: #f3eefc;         /* primary text */
-  --muted: #cbbff0;
-  --pill-radius: 999px;
-  --max-width: 920px;
-  --gap: 14px;
-  --nav-height: 62px;
+/* --- THEME VARIABLES --- */
+:root {
+    --bg: #0f0420;
+    --card: #221033; /* Slightly lighter card for profile */
+    --card-bg: #1a1032; /* Used for filter panel, modal */
+    --accent: #9b6cff;
+    --accent-dark: #7a52cc; /* Darker accent for hover */
+    --accent-strong: #9b6cff; /* Kept for consistency if used elsewhere */
+    --text: #f3eefc;
+    --muted: #cbbff0;
+    --muted-2: #98a0b3;      /* secondary muted (for dates) */
+    --border-contrast: rgba(255, 255, 255, 0.1); /* Updated for better visibility */
+    --input-bg: rgba(255, 255, 255, 0.03);
+    --card-elev: 0 8px 30px rgba(0,0,0,0.5);
+    --pill-radius: 999px;
+    --card-radius: 16px; /* Standard card radius */
+    --max-width: 1400px; /* Max width for main content areas */
+    --gap: 14px;
+    --nav-height: 62px;
 }
 
-/* global */
+/* --- BASE STYLES --- */
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
-body{background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased;}
-.app{min-height:100vh;padding:16px;padding-bottom: calc(var(--nav-height) + 24px); display:flex; align-items:center; justify-content:center;}
+body{background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; padding-bottom: calc(var(--nav-height) + 20px); /* Add padding for bottom nav */}
+.app{min-height:100vh;padding:16px;padding-bottom: calc(var(--nav-height) + 24px); display:flex; align-items:center; justify-content:center;} /* For profile pages */
 
-/* Card base */
+/* --- GLOBAL CARD STYLES --- */
 .card{
   width: min(96vw, var(--max-width));
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border-radius:16px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
+  border-radius:var(--card-radius);
   overflow:hidden;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  box-shadow: var(--card-elev);
   border: 1px solid rgba(255,255,255,0.04);
 }
 
-/* banner */
+/* --- [!] PROFILE/EDIT CARD NARROWING [!] --- */
+.profile-card,
+.edit-card {
+    /* Set a maximum width of 700px for consistency */
+    width: min(96vw, 700px) !important;
+    margin: 20px auto; /* Keep it centered */
+}
+.app {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+/* --- END OF NARROWING RULES --- */
+
+
+/* --- PROFILE CARD SPECIFIC LAYOUT --- */
 .card-banner{
   height:96px;
   background: linear-gradient(90deg, rgba(155,108,255,0.95), rgba(145,90,255,0.85));
 }
 .card-banner.small{height:68px}
-
-/* profile card layout */
 .profile-card{ position:relative; padding-bottom: 20px; }
 .avatar-wrap{ position:relative; display:flex; justify-content:center; margin-top:-60px; pointer-events:none;}
 .avatar{
   width:120px; height:120px; border-radius:50%; background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.12)); display:flex; align-items:center; justify-content:center;
-  border:6px solid var(--card);
-  color:var(--muted); font-size:44px;
+  border:6px solid var(--card); color:var(--muted); font-size:44px;
   box-shadow:0 8px 22px rgba(0,0,0,0.6);
+  background-size: cover; background-position: center;
 }
-
-/* card content */
 .card-content{ padding:20px 20px 28px; }
 .profile-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
 .profile-name h1{ margin:0; font-size:1.15rem; letter-spacing:0.06em; }
 .muted{ color:var(--muted); margin:6px 0 0 0; font-size:0.92rem; }
-
 .bio{ margin:16px 0; color:var(--muted); line-height:1.45; }
 
-/* actions */
-.btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:var(--pill-radius); text-decoration:none; font-weight:600; cursor:pointer; border:0; }
+/* --- ACTIONS (Buttons) --- */
+.btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:var(--pill-radius); text-decoration:none; font-weight:600; cursor:pointer; border:0; font-size: 0.9rem; }
 .btn-primary{ background:var(--accent); color:var(--text); box-shadow: 0 6px 18px rgba(155,108,255,0.12); }
-.btn-secondary{ background:var(--text); color:var(--card); padding:10px 16px; }
+.btn-primary:hover{ background:var(--accent-dark); }
+.btn-secondary{ background:rgba(255,255,255,0.05); color:var(--muted); border: 1px solid rgba(255,255,255,0.04); padding:10px 16px; }
+.btn-secondary:hover{ background: rgba(255,255,255,0.1); color: var(--text); }
 
-/* skills */
-.section-title{ margin:10px 0 8px 0; color:var(--text); font-size:0.95rem; }
+/* --- SKILLS DISPLAY (Profile Pages & Pills) --- */
+.section-title{ margin: 20px 0 12px 0; color:var(--text); font-size:1.1rem; font-weight: 600; padding-bottom: 8px; border-bottom: 1px solid var(--border-contrast); }
 .skills{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
-.skill{ background: rgba(255,255,255,0.03); color:var(--text); padding:8px 12px; border-radius:999px; font-size:0.82rem; display:inline-flex; gap:8px; align-items:center; }
+.skill{ background: rgba(255,255,255,0.03); color:var(--muted); padding:8px 12px; border-radius:var(--pill-radius); font-size:0.85rem; display:inline-flex; gap:8px; align-items:center; }
 
-/* github grid */
-.github-grid{ margin-top:8px; }
+/* --- GITHUB GRID (Profile Pages) --- */
+.github-grid{ margin-top:16px; }
 .grid{ display:grid; grid-template-columns: repeat(14, 10px); gap:6px; align-items:center; }
 .grid .sq{ width:10px; height:10px; border-radius:2px; background: rgba(255,255,255,0.03); }
 .grid .sq:nth-child(3n){ background: rgba(155,108,255,0.18); }
 .grid .sq:nth-child(5n){ background: rgba(155,108,255,0.32); }
 .grid .sq:nth-child(7n){ background: rgba(155,108,255,0.5); }
 
-/* edit form */
+/* --- EDIT FORM (Edit Profile / Register) --- */
 .edit-card .card-content{ padding:18px; }
-.edit-form{ display:flex; flex-direction:column; gap:12px; }
+.edit-form{ display:flex; flex-direction:column; gap:14px; }
 .edit-form label{ display:flex; flex-direction:column; gap:6px; color:var(--muted); font-size:0.9rem; }
-.edit-form input, .edit-form textarea{
-  background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.04); color:var(--text); padding:10px 12px; border-radius:10px; outline:none;
+.edit-form input, .edit-form textarea, .edit-form select {
+  background: var(--input-bg); border:1px solid rgba(255,255,255,0.04); color:var(--text); padding:12px 14px; border-radius:10px; outline:none; font-size: 1rem;
+}
+.edit-form input:focus, .edit-form textarea:focus, .edit-form select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(155, 108, 255, 0.18);
 }
 .edit-form textarea{ resize:vertical; min-height:84px; }
+.form-actions{ display:flex; gap:12px; margin-top:16px; justify-content:flex-end; }
 
-.form-actions{ display:flex; gap:12px; margin-top:8px; justify-content:flex-end; }
-.form-actions .btn-secondary{ background:var(--text); color:var(--card); }
+/* --- BOTTOM NAVIGATION BAR --- */
+.bottom-nav { position: fixed; left: 0; right: 0; bottom: 0; width: 100%; margin: 0; border-radius: 0; padding: 8px 12px; box-shadow: 0 -6px 30px rgba(0, 0, 0, 0.6); display: flex; justify-content: space-between; gap: 6px; background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.12)); backdrop-filter: blur(6px); z-index: 9999; }
+.bottom-nav .nav-item { flex: 1; text-align: center; padding: 8px 6px; border-radius: 8px; color: var(--muted); text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out; }
+.bottom-nav .nav-item i { font-size: 18px; }
+.bottom-nav .nav-item span { font-size: 0.82rem; }
+.bottom-nav .nav-item.active { background: rgba(155, 108, 255, 0.12); color: var(--text); }
+.bottom-nav .nav-item:not(.active):hover { color: var(--text); }
 
-/* bottom nav */
-.bottom-nav{
-  position:fixed; left:0; right:0; bottom:0; height:var(--nav-height); background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.2));
-  display:flex; justify-content:center; align-items:center; gap:20px; padding:8px 20px; box-shadow:0 -6px 30px rgba(0,0,0,0.6);
-  backdrop-filter: blur(6px);
+/* --- STANDARD PAGE HEADER --- */
+.page-header { display: flex; align-items: center; gap: 16px; padding: 14px 20px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12)); backdrop-filter: blur(6px); border-bottom: 1px solid rgba(255,255,255,0.04); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+.page-header h1 { margin: 0; font-size: 1.5rem; color: var(--text); }
+.btn-back { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid rgba(255,255,255,0.04); padding: 8px 12px; border-radius: var(--pill-radius); cursor: pointer; font-size: 0.9rem; font-weight: 500; text-decoration: none; }
+.btn-back:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+
+/* --- STUDENT CARD STYLES (Home/Search Pages) --- */
+.dashboard-container { display: flex; gap: 20px; padding: 20px; max-width: var(--max-width); margin: 0 auto; }
+aside.filters { width: 280px; flex-shrink: 0; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06)); border-radius: var(--card-radius); padding: 20px; border: 1px solid rgba(255,255,255,0.04); box-shadow: var(--card-elev); align-self: flex-start; }
+.cards-grid, section.results-area { flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+.student-card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+    border-radius: 12px; padding: 20px; border: 1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform .14s ease, box-shadow .14s ease;
+    color: var(--text); text-decoration: none;
 }
-.nav-item{ color:var(--muted); text-decoration:none; display:flex; flex-direction:column; align-items:center; font-size:0.75rem; gap:6px; padding:8px 12px; border-radius:12px; }
-.nav-item i{ font-size:18px; }
-.nav-item.active{ background: rgba(155,108,255,0.12); color:var(--text); }
+.student-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(0,0,0,0.55); }
+.card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.profile-pic { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover; }
+.student-card h3 { margin: 0; font-size: 1.1rem; color: var(--text); font-weight: 600; }
+.skill-item { margin-bottom: 12px; }
+.skill-item > div { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.skill-item strong { font-size: 0.9rem; color: var(--muted); }
+.star-rating { font-size: 0.9rem; color: var(--accent); letter-spacing: 1px; flex-shrink: 0; }
+.student-card small { display: block; margin-top: 16px; color: var(--muted); font-size: 0.85rem; text-align: right; opacity: 0.7; }
+.loading-placeholder { color: var(--muted); text-align: center; padding: 20px; font-size: 0.95rem; }
 
-/* mobile-first spacing fixes */
-@media (min-width:640px){
-  .card-content{ padding:28px; }
-  .avatar{ width:140px; height:140px; margin-top:8px; font-size:48px; }
+/* --- RESPONSIVE STYLES --- */
+@media (max-width: 820px) {
+    .dashboard-container { flex-direction: column; }
+    aside.filters { width: 100%; }
+}
+/* --- Translucent Background Image --- */
+
+body::before {
+    content: "";
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    z-index: -1;
+    background-image: url('bg.jpeg');
+    background-size: cover; background-position: center center;
+    background-repeat: no-repeat;
+    opacity: 0.1;
 }
 
-/* Desktop: 16:9 appearance and left-aligned header */
-@media (min-width:900px){
-  .app{ padding:40px; }
+/* Ensure body content stays above the pseudo-element */
+body { position: relative; z-index: 0; background-color: var(--bg); }
 
-  /* Only the profile card becomes a horizontal 16:9 layout */
-  .profile-card{
-    display:flex;
-    align-items:stretch;
-    gap:0;
-    flex-direction:row;
-  }
-
-  .card-banner{ width:40%; height:100%; min-width:320px; border-radius:16px 0 0 16px; }
-  .avatar-wrap{ position:relative; justify-content:flex-start; margin:0; padding-left:22px; width:60%; display:flex; align-items:flex-start; }
-  .card-content{ width:60%; padding:32px; }
-  .profile-head{ align-items:flex-start; }
-  .profile-name h1{ font-size:1.6rem; }
-
-  /* enforce 16:9 feel only on the profile card */
-  .profile-card{ aspect-ratio: 16 / 9; max-width: calc(min(100vw - 120px, var(--max-width))); }
-
-  /* Keep edit-card vertically stacked and allow scrolling if content exceeds card */
-  .edit-card{
-    display:block;
-    aspect-ratio: auto;
-    max-height: calc(100vh - 120px);
-    overflow:auto;
-  }
-  .edit-card .card-content{ overflow:auto; }
-
-  .bottom-nav{ left: auto; right: auto; bottom:18px; width: min(92vw, 640px); margin:0 auto; border-radius:999px; }
-}
-
-/* small tweaks */
-a.btn:focus, button.btn:focus{ outline:2px solid rgba(155,108,255,0.35); outline-offset:3px; }
+/* --- End of Background Image Styles --- */

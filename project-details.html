@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Project Details — Loading...</title>
+  
+  <link rel="stylesheet" href="styles.css"> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* Use the same page header as the profile pages */
+    .page-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 14px 20px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
+        backdrop-filter: blur(6px);
+        border-bottom: 1px solid rgba(255,255,255,0.04);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .page-header h1 { margin: 0; font-size: 1.5rem; color: var(--text); }
+    .btn-back { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid rgba(255,255,255,0.04); padding: 8px 12px; border-radius: var(--pill-radius); cursor: pointer; font-size: 0.9rem; font-weight: 500; text-decoration: none; }
+    .btn-back:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+    
+    /* --- Page-specific styles --- */
+    
+    .project-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 16px;
+        margin-bottom: 12px;
+    }
+    .project-header h1 {
+        font-size: 1.8rem;
+        color: var(--text);
+        margin: 0;
+    }
+    
+    /* Status Pill Styles (from myprojects.html) */
+    .status-tag{
+        padding: 6px 10px; border-radius:999px; font-size:0.82rem;
+        font-weight:600; color:var(--text); white-space:nowrap;
+        flex-shrink: 0;
+    }
+    .status-In-Progress{ background: linear-gradient(90deg,#6f6df0,#9d6cd3); }
+    .status-Planned{ background: linear-gradient(90deg,#ffba66,#ff9a3d); color:#1a1320; }
+    .status-Completed{ background: linear-gradient(90deg,#37d67a,#00c853); }
+
+    .project-date {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-bottom: 16px;
+    }
+    .project-description {
+        color: var(--muted);
+        line-height: 1.5;
+        font-size: 1rem;
+        margin-bottom: 24px;
+    }
+
+    .section-title {
+        font-size: 1.2rem;
+        color: var(--text);
+        margin-top: 24px;
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--border-contrast);
+    }
+
+    /* Tool Pills */
+    .pill-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      padding: 6px 12px;
+      border-radius: var(--pill-radius);
+      font-size: 0.9rem;
+    }
+    .pill i {
+        color: var(--accent);
+    }
+
+    /* Team Member Cards */
+    .team-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 16px;
+    }
+    .team-member-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--input-bg);
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.04);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .team-member-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        border-color: rgba(255,255,255,0.1);
+    }
+    .team-member-card .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background-image: var(--avatar-url);
+      background-size: cover;
+      background-position: center;
+      flex-shrink: 0;
+      border: 2px solid var(--accent);
+    }
+    .team-member-info {
+      flex: 1;
+    }
+    .team-member-info strong {
+      display: block;
+      color: var(--text);
+      font-size: 1rem;
+    }
+    .team-member-info span {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .loading-placeholder {
+        color: var(--muted);
+        padding: 20px;
+        text-align: center;
+    }
+  </style>
+</head>
+<body>
+  
+  <header class="page-header">
+    <a href="myprojects.html" class="btn-back">
+        <i class="fa-solid fa-chevron-left"></i>
+        <span>Projects</span>
+    </a>
+    <h1 id="header-project-name">Loading...</h1>
+  </header>
+
+  <main class="app">
+    <section class="card edit-card" aria-labelledby="project-heading">
+      <div class="card-content" style="padding-top: 24px;">
+        
+        <div class="project-header">
+          <h1 id="main-project-name">Loading...</h1>
+          <span id="project-status" class="status-tag">...</span>
+        </div>
+        
+        <p class="project-date" id="project-date">Est. ...</p>
+        
+        <p class="project-description" id="project-description">
+            Loading project details...
+        </p>
+
+        <h3 class="section-title">Working Tools</h3>
+        <div class="pill-container" id="tools-container">
+            <p class="loading-placeholder">Loading tools...</p>
+        </div>
+
+        <h3 class="section-title">Team Members</h3>
+        <div class="team-container" id="team-container">
+            <p class="loading-placeholder">Loading team...</p>
+        </div>
+
+      </div>
+    </section>
+  </main>
+  
+  <nav class="bottom-nav" role="navigation" aria-label="Primary">
+    <a href="index.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Home</span></a>
+    <a href="search.html" class="nav-item"><i class="fa-solid fa-compass"></i><span>Explore</span></a>
+    <a href="myprojects.html" class="nav-item active"><i class="fa-solid fa-folder"></i><span>Projects</span></a>
+    <a href="profile.html" class="nav-item"><i class="fa-solid fa-user"></i><span>Profile</span></a>
+  </nav>
+
+  <script>
+    // Helper function to format date
+    function formatDate(isoDate) {
+        if (!isoDate) return 'No date specified';
+        return new Date(isoDate).toLocaleDateString('en-US', {
+            month: 'long', day: 'numeric', year: 'numeric'
+        });
+    }
+    
+    // Helper function to get status class
+    function getStatusClass(status) {
+        if (!status) return 'status-Planned';
+        return `status-${status.replace(/\s+/g, '-')}`;
+    }
+
+    // Main function to load project details
+    async function loadProjectDetails() {
+        // 1. Get the project ID from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const projectId = urlParams.get('id');
+        
+        if (!projectId) {
+            document.body.innerHTML = '<h1>Error: No project ID provided.</h1>';
+            return;
+        }
+
+        try {
+            // 2. Fetch the data
+            const response = await fetch(`/api/project/${projectId}`);
+            if (!response.ok) throw new Error('Project not found');
+            
+            const project = await response.json();
+
+            // 3. Populate the page
+            document.title = `Project — ${project.name}`;
+            document.getElementById('header-project-name').textContent = project.name;
+            document.getElementById('main-project-name').textContent = project.name;
+            document.getElementById('project-date').textContent = `Started: ${formatDate(project.start_date)}`;
+            document.getElementById('project-description').textContent = project.description || 'No description provided.';
+            
+            // Status pill
+            const statusEl = document.getElementById('project-status');
+            statusEl.textContent = project.status;
+            statusEl.className = `status-tag ${getStatusClass(project.status)}`;
+
+            // 4. Populate Tools
+            const toolsContainer = document.getElementById('tools-container');
+            toolsContainer.innerHTML = '';
+            if (project.tools && project.tools.length > 0) {
+                project.tools.forEach(tool => {
+                    const pill = document.createElement('div');
+                    pill.className = 'pill';
+                    pill.innerHTML = `<i class="fa-solid fa-wrench"></i> <span>${tool.name}</span>`;
+                    toolsContainer.appendChild(pill);
+                });
+            } else {
+                toolsContainer.innerHTML = '<p class="loading-placeholder">No tools listed for this project.</p>';
+            }
+
+            // 5. Populate Team Members
+            const teamContainer = document.getElementById('team-container');
+            teamContainer.innerHTML = '';
+            if (project.members && project.members.length > 0) {
+                project.members.forEach(member => {
+                    const card = document.createElement('a');
+                    card.className = 'team-member-card';
+                    card.href = `user-profile.html?id=${member.id}`; 
+                    
+                    const avatarUrl = `https://i.pravatar.cc/100?img=${member.id}`;
+                    
+                    card.innerHTML = `
+                        <div class="avatar" style="--avatar-url: url('${avatarUrl}')"></div>
+                        <div class="team-member-info">
+                            <strong>${member.full_name}</strong>
+                            <span>Year ${member.year || 'N/A'} - ${member.email}</span>
+                        </div>
+                    `;
+                    teamContainer.appendChild(card);
+                });
+            } else {
+                teamContainer.innerHTML = '<p class="loading-placeholder">No team members listed.</p>';
+            }
+
+        } catch (error) {
+            console.error('Error loading project details:', error);
+            document.getElementById('main-project-name').textContent = 'Error';
+            document.getElementById('project-description').textContent = 'Could not load project. Please check the ID and try again.';
+        }
+    }
+    
+    // Run the function when the page loads
+    document.addEventListener('DOMContentLoaded', loadProjectDetails);
+  </script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Create Your Profile</title>
+  
+  <link rel="stylesheet" href="styles.css"> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <style>
+    .page-header { display: flex; align-items: center; gap: 16px; padding: 14px 20px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12)); backdrop-filter: blur(6px); border-bottom: 1px solid rgba(255,255,255,0.04); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+    .page-header h1 { margin: 0; font-size: 1.5rem; color: var(--text); }
+    .btn-back { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid rgba(255,255,255,0.04); padding: 8px 12px; border-radius: var(--pill-radius); cursor: pointer; font-size: 0.9rem; font-weight: 500; text-decoration: none; }
+    .btn-back:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+    .skills-section { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-contrast); }
+    .skills-section h3 { font-size: 1.2rem; color: var(--text); margin-bottom: 16px; }
+    #skills-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+    .skill-item { display: flex; align-items: center; gap: 12px; background: var(--input-bg); padding: 12px 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.04); }
+    .skill-item-name { flex: 1; font-weight: 500; color: var(--muted); }
+    .skill-item-rating { display: flex; gap: 2px; }
+    .skill-item-rating .dot { width: 14px; height: 14px; border-radius: 50%; background-color: rgba(255,255,255,0.1); }
+    .skill-item-rating .dot.filled { background-color: #37d67a; }
+    .skill-item-remove { background: none; border: none; color: #ff6b6b; cursor: pointer; font-size: 1.1rem; padding: 4px; }
+    .skill-item-remove:hover { color: #e03131; }
+    .add-skill-container { position: relative; background: rgba(255,255,255,0.02); padding: 16px; border-radius: 10px; border: 1px dashed rgba(255,255,255,0.1); }
+    .add-skill-search { position: relative; width: 100%; margin-bottom: 12px; }
+    .add-skill-search input { width: 100%; }
+    #skill-search-results { position: absolute; top: 100%; left: 0; right: 0; background: #2d2d44; border: 1px solid var(--border-contrast); border-radius: 0 0 10px 10px; max-height: 200px; overflow-y: auto; z-index: 100; display: none; }
+    #skill-search-results.open { display: block; }
+    #skill-search-results div { padding: 12px 16px; color: var(--muted); cursor: pointer; }
+    #skill-search-results div:hover { background-color: var(--accent-strong); color: var(--text); }
+    .rating-container { display: flex; flex-direction: column; gap: 8px; }
+    .rating-container label { font-size: 0.9rem; color: var(--muted); font-weight: 500; }
+    .rating-dots { display: flex; gap: 6px; }
+    .rating-dots .dot { width: 24px; height: 24px; border-radius: 50%; background: rgba(255,255,255,0.1); cursor: pointer; transition: background-color 0.2s ease; }
+    .rating-dots .dot:hover { background: rgba(255,255,255,0.2); }
+    .rating-dots.rating-1 .dot:nth-child(-n+1),.rating-dots.rating-2 .dot:nth-child(-n+2),.rating-dots.rating-3 .dot:nth-child(-n+3),.rating-dots.rating-4 .dot:nth-child(-n+4),.rating-dots.rating-5 .dot:nth-child(-n+5) { background-color: #37d67a; }
+    #rating-message { font-size: 0.85rem; color: var(--muted); min-height: 1.2em; }
+    #add-skill-btn { background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid rgba(255,255,255,0.1); padding: 10px 16px; border-radius: var(--pill-radius); cursor: pointer; font-weight: 600; margin-top: 16px; }
+    #add-skill-btn:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+    #form-status-message { text-align: center; margin-bottom: 16px; font-weight: 500; min-height: 1.2em; }
+    #form-status-message.success { color: #37d67a; }
+    #form-status-message.error { color: #ff6b6b; }
+  </style>
+</head>
+<body>
+  
+  <header class="page-header">
+    <a href="login.html" class="btn-back">
+        <i class="fa-solid fa-chevron-left"></i>
+        <span>Back to Login</span>
+    </a>
+    <h1>Create Your Account</h1>
+  </header>
+
+  <main class="app">
+    <section class="card edit-card" aria-labelledby="edit-heading">
+      <div class="card-content">
+        <form class="edit-form" id="register-form" novalidate>
+          
+          <div id="form-status-message"></div>
+          
+          <label>
+            <span class="label">Username (this is for logging in)</span>
+            <input type="text" id="username" required>
+          </label>
+          <label>
+            <span class="label">Password</span>
+            <input type="password" id="password" required>
+          </label>
+          
+          <hr style="border: none; height: 1px; background-color: var(--border-contrast); margin: 12px 0;">
+
+          <label>
+            <span class="label">Full Name</span>
+            <input type="text" id="full_name" required>
+          </label>
+          <label>
+            <span class="label">Phone Number</span>
+            <input type="tel" id="phone" placeholder="+91 98765 43210">
+          </label>
+          <label>
+            <span class="label">Email ID</span>
+            <input type="email" id="email" required>
+          </label>
+          <label>
+            <span class="label">Year of Study</span>
+            <input type="number" id="year" min="1" max="10" value="1">
+          </label>
+          <label>
+            <span class="label">Institute</span>
+            <select id="institute" name="institute" required>
+              <option value="">Loading institutes...</option>
+            </select>
+          </label>
+          <label>
+            <span class="label">Bio</span>
+            <textarea id="bio" name="bio" rows="4" placeholder="Tell everyone a bit about yourself..."></textarea>
+          </label>
+          
+          <div class="skills-section">
+            <h3>Your Skills</h3>
+            <div id="skills-list"></div>
+            <div class="add-skill-container">
+              <div class="add-skill-search">
+                <input type="text" id="skill-search-input" placeholder="Search for a skill (e.g., Python)">
+                <div id="skill-search-results"></div>
+              </div>
+              <div class="rating-container">
+                <label>Choose your level:</label>
+                <div class="rating-dots" id="rating-dots"><div class="dot" data-value="1"></div><div class="dot" data-value="2"></div><div class="dot" data-value="3"></div><div class="dot" data-value="4"></div><div class="dot" data-value="5"></div></div>
+                <span id="rating-message"></span>
+              </div>
+              <button type="button" id="add-skill-btn"><i class="fa-solid fa-plus"></i> Add Skill</button>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">
+              <i class="fa-solid fa-user-plus"></i> Create Profile
+            </button>
+            <a class="btn btn-secondary" href="login.html">
+              <i class="fa-solid fa-ban"></i> Cancel
+            </a>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // State and DOM refs (mostly the same)
+    let userSkills = [];
+    let selectedSkillFromSearch = null;
+    let selectedRating = 0;
+    const ratingMessages = { 0: '', 1: 'Beginner', 2: 'Have experience', 3: 'Intermediate', 4: 'Well experienced', 5: 'Expert' };
+    const form = document.getElementById('register-form');
+    const instituteSelect = document.getElementById('institute');
+    const skillsListDiv = document.getElementById('skills-list');
+    const skillSearchInput = document.getElementById('skill-search-input');
+    const skillSearchResultsDiv = document.getElementById('skill-search-results');
+    const ratingDotsContainer = document.getElementById('rating-dots');
+    const ratingMessageSpan = document.getElementById('rating-message');
+    const addSkillBtn = document.getElementById('add-skill-btn');
+    const statusMessageDiv = document.getElementById('form-status-message');
+
+    async function apiFetch(url, options = {}) {
+      try {
+        const response = await fetch(url, options);
+        // We need the response data even if it's not 'ok' (to get error messages)
+        const data = await response.json();
+        if (!response.ok) {
+            // Pass the server's error message
+            throw new Error(data.message || `HTTP error! status: ${response.status}`);
+        }
+        return data;
+      } catch (error)
+      {
+        console.error('API Fetch Error:', error);
+        statusMessageDiv.textContent = error.message;
+        statusMessageDiv.className = 'error';
+        return null;
+      }
+    }
+
+    // Load institutes (same as edit-profile)
+    async function loadInstitutes() {
+      const institutes = await apiFetch('/api/institutes');
+      if (institutes) {
+        instituteSelect.innerHTML = '<option value="">Select your institute...</option>';
+        institutes.forEach(inst => {
+          const option = document.createElement('option');
+          option.value = inst.name;
+          option.textContent = inst.name;
+          instituteSelect.appendChild(option);
+        });
+      }
+    }
+    
+    // All skill management functions are identical to edit-profile.html
+    function renderSkillsList() {
+      skillsListDiv.innerHTML = '';
+      userSkills.forEach(skill => {
+        const skillDiv = document.createElement('div');
+        skillDiv.className = 'skill-item';
+        let dotsHtml = '';
+        for (let i = 1; i <= 5; i++) { dotsHtml += `<div class="dot ${i <= skill.rating ? 'filled' : ''}"></div>`; }
+        skillDiv.innerHTML = `
+          <span class="skill-item-name">${skill.name}</span>
+          <div class="skill-item-rating">${dotsHtml}</div>
+          <button type="button" class="skill-item-remove" data-skill-id="${skill.id}">&times;</button>
+        `;
+        skillDiv.querySelector('.skill-item-remove').addEventListener('click', (e) => {
+          const skillIdToRemove = parseInt(e.currentTarget.dataset.skillId);
+          userSkills = userSkills.filter(s => s.id !== skillIdToRemove);
+          renderSkillsList();
+        });
+        skillsListDiv.appendChild(skillDiv);
+      });
+    }
+    skillSearchInput.addEventListener('input', async (e) => {
+      const query = e.target.value;
+      if (query.length < 1) { skillSearchResultsDiv.classList.remove('open'); return; }
+      const skills = await apiFetch(`/api/skills/search?q=${query}`);
+      skillSearchResultsDiv.innerHTML = '';
+      if (skills && skills.length > 0) {
+        skills.forEach(skill => {
+          const div = document.createElement('div');
+          div.textContent = skill.name;
+          div.dataset.skillId = skill.id;
+          div.dataset.skillName = skill.name;
+          div.addEventListener('click', () => {
+            selectedSkillFromSearch = { id: skill.id, name: skill.name };
+            skillSearchInput.value = skill.name;
+            skillSearchResultsDiv.classList.remove('open');
+          });
+          skillSearchResultsDiv.appendChild(div);
+        });
+        skillSearchResultsDiv.classList.add('open');
+      } else { skillSearchResultsDiv.classList.remove('open'); }
+    });
+    ratingDotsContainer.addEventListener('click', (e) => {
+      if (e.target.classList.contains('dot')) {
+        const rating = parseInt(e.target.dataset.value);
+        selectedRating = rating;
+        ratingDotsContainer.className = `rating-dots rating-${rating}`;
+        ratingMessageSpan.textContent = ratingMessages[rating];
+      }
+    });
+    addSkillBtn.addEventListener('click', () => {
+      if (!selectedSkillFromSearch) { alert('Please search for and select a skill from the list.'); return; }
+      if (selectedRating === 0) { alert('Please select a rating (1-5 dots).'); return; }
+      if (userSkills.some(s => s.id === selectedSkillFromSearch.id)) { alert('You have already added this skill.'); return; }
+      userSkills.push({ id: selectedSkillFromSearch.id, name: selectedSkillFromSearch.name, rating: selectedRating });
+      renderSkillsList();
+      selectedSkillFromSearch = null; selectedRating = 0;
+      skillSearchInput.value = '';
+      ratingDotsContainer.className = 'rating-dots';
+      ratingMessageSpan.textContent = '';
+    });
+    
+    // [UPDATED] Form Submission
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      statusMessageDiv.textContent = 'Creating account...';
+      statusMessageDiv.className = 'success';
+      
+      const formData = {
+        username: document.getElementById('username').value,
+        password: document.getElementById('password').value,
+        full_name: document.getElementById('full_name').value,
+        phone: document.getElementById('phone').value,
+        email: document.getElementById('email').value,
+        year: parseInt(document.getElementById('year').value),
+        bio: document.getElementById('bio').value,
+        institute_name: instituteSelect.value,
+        skills: userSkills.map(s => ({ name: s.name, rating: s.rating }))
+      };
+      
+      // [!] Send to the new register endpoint
+      const result = await apiFetch(`/api/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      
+      if (result && result.success) {
+        statusMessageDiv.textContent = 'Account created! Redirecting to login...';
+        statusMessageDiv.className = 'success';
+        setTimeout(() => {
+          window.location.href = 'login.html'; // Redirect to login page
+        }, 2000);
+      } else {
+         // Error message is already set by apiFetch
+      }
+    });
+
+    // Run on page load
+    loadInstitutes();
+  </script>
+</body>
+</html>

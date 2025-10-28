@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Add New Project</title>
+
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* Use the same page header as the profile pages */
+    .page-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 14px 20px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
+        backdrop-filter: blur(6px);
+        border-bottom: 1px solid rgba(255,255,255,0.04);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .page-header h1 { margin: 0; font-size: 1.5rem; color: var(--text); }
+    .btn-back { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid rgba(255,255,255,0.04); padding: 8px 12px; border-radius: var(--pill-radius); cursor: pointer; font-size: 0.9rem; font-weight: 500; text-decoration: none; }
+    .btn-back:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+
+    /* --- Page-specific styles --- */
+    .search-container { position: relative; }
+    .search-results-dropdown {
+      position: absolute; top: 100%; left: 0; right: 0; background: #2d2d44;
+      border: 1px solid var(--border-contrast); border-radius: 0 0 10px 10px;
+      max-height: 200px; overflow-y: auto; z-index: 100; display: none;
+    }
+    .search-results-dropdown.open { display: block; }
+    .search-results-dropdown div { padding: 12px 16px; color: var(--muted); cursor: pointer; }
+    .search-results-dropdown div:hover { background-color: var(--accent); color: var(--text); }
+    .pill-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .pill {
+      display: flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.1);
+      color: var(--text); padding: 6px 10px; border-radius: var(--pill-radius); font-size: 0.9rem;
+    }
+    .pill button { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1.1rem; padding: 0; line-height: 1; }
+    .pill button:hover { color: #ff6b6b; }
+    .team-member-card {
+      display: flex; align-items: center; gap: 12px; background: var(--input-bg);
+      padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.04);
+    }
+    .team-member-card .avatar {
+      width: 40px; height: 40px; border-radius: 50%; background: var(--accent);
+      display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;
+    }
+    .team-member-info { flex: 1; }
+    .team-member-info strong { display: block; color: var(--text); font-size: 1rem; }
+    .team-member-info span { font-size: 0.9rem; color: var(--muted); }
+    .team-member-card .remove-member-btn { background: none; border: none; color: #ff6b6b; cursor: pointer; font-size: 1.2rem; }
+    #form-status-message { text-align: center; margin-bottom: 16px; font-weight: 500; min-height: 1.2em; }
+    #form-status-message.success { color: #37d67a; }
+    #form-status-message.error { color: #ff6b6b; }
+  </style>
+</head>
+<body>
+
+  <header class="page-header">
+    <a href="myprojects.html" class="btn-back">
+        <i class="fa-solid fa-chevron-left"></i>
+        <span>Back</span>
+    </a>
+    <h1>Create New Project</h1>
+  </header>
+
+  <main class="app">
+    <section class="card edit-card" aria-labelledby="project-heading">
+      <div class="card-content" style="padding-top: 24px;">
+
+        <form class="edit-form" id="add-project-form" novalidate>
+          <div id="form-status-message"></div>
+          <label>
+            <span class="label">Project Name</span>
+            <input type="text" id="project-name" required>
+          </label>
+          <label>
+            <span class="label">Project Description</span>
+            <textarea id="project-description" rows="4"></textarea>
+          </label>
+          <div style="display: flex; gap: 12px;">
+            <label style="flex: 1;">
+              <span class="label">Start Date</span>
+              <input type="date" id="project-start-date" required>
+            </label>
+            <label style="flex: 1;">
+              <span class="label">Status</span>
+              <select id="project-status">
+                <option value="In Progress">In Progress</option>
+                <option value="Planned">Planned</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </label>
+          </div>
+          <label>
+            <span class="label">Project Type</span>
+            <select id="project-type">
+              <option value="Software">Software</option>
+              <option value="Hardware">Hardware</option>
+              <option value="Other">Other</option>
+            </select>
+          </label>
+          <label>
+            <span class="label">Working Tools (e.g., Figma, Git, Python)</span>
+            <div class="search-container">
+              <input type="text" id="tools-search-input" placeholder="Search for tools...">
+              <div class="search-results-dropdown" id="tools-search-results"></div>
+            </div>
+            <div class="pill-container" id="tools-pill-container"></div>
+          </label>
+          <label>
+            <span class="label">Add Team Members</span>
+            <div class="search-container">
+              <input type="text" id="members-search-input" placeholder="Search for users by name or email...">
+              <div class="search-results-dropdown" id="members-search-results"></div>
+            </div>
+            <div class="pill-container" id="members-card-container" style="flex-direction: column;"></div>
+          </label>
+          <div class="form-actions" style="margin-top: 16px;">
+            <button class="btn btn-primary" type="submit">
+              <i class="fa-solid fa-plus"></i> Create Project
+            </button>
+            <a class="btn btn-secondary" href="myprojects.html">
+              <i class="fa-solid fa-ban"></i> Cancel
+            </a>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" role="navigation" aria-label="Primary">
+    <a href="index.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Home</span></a>
+    <a href="search.html" class="nav-item"><i class="fa-solid fa-compass"></i><span>Explore</span></a>
+    <a href="myprojects.html" class="nav-item active"><i class="fa-solid fa-folder"></i><span>Projects</span></a>
+    <a href="profile.html" class="nav-item"><i class="fa-solid fa-user"></i><span>Profile</span></a>
+  </nav>
+
+  <script>
+    // --- STATE MANAGEMENT ---
+    const CURRENT_USER_ID = localStorage.getItem('skillLinkUserID');
+    if (!CURRENT_USER_ID) {
+        window.location.href = 'login.html';
+    }
+    let addedTools = []; // Holds names
+    let addedMembers = []; // Holds user objects
+
+    // --- DOM REFERENCES ---
+    const form = document.getElementById('add-project-form');
+    const statusMessageDiv = document.getElementById('form-status-message');
+    const toolSearchInput = document.getElementById('tools-search-input');
+    const toolSearchResults = document.getElementById('tools-search-results');
+    const toolPillContainer = document.getElementById('tools-pill-container');
+    const memberSearchInput = document.getElementById('members-search-input');
+    const memberSearchResults = document.getElementById('members-search-results');
+    const memberCardContainer = document.getElementById('members-card-container');
+
+    // --- API HELPER ---
+    async function apiFetch(url, options = {}) {
+        try {
+            const response = await fetch(url, options);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            return await response.json();
+        } catch (error) {
+            console.error('API Fetch Error:', error);
+            statusMessageDiv.textContent = 'A network error occurred.';
+            statusMessageDiv.className = 'error';
+            return null;
+        }
+    }
+
+    // --- GENERIC SEARCH HANDLER ---
+    function setupSearch(inputElement, resultsElement, onSelect) {
+        inputElement.addEventListener('input', async (e) => {
+            const query = e.target.value;
+            const searchType = inputElement.id === 'tools-search-input' ? 'tools' : 'users';
+            if (query.length < 1) { resultsElement.classList.remove('open'); return; }
+
+            const results = await apiFetch(`/api/${searchType}/search?q=${query}`);
+            resultsElement.innerHTML = '';
+            if (results && results.length > 0) {
+                results.forEach(item => {
+                    const div = document.createElement('div');
+                    div.textContent = item.name || item.full_name;
+                    div.addEventListener('click', () => {
+                        onSelect(item);
+                        inputElement.value = '';
+                        resultsElement.classList.remove('open');
+                    });
+                    resultsElement.appendChild(div);
+                });
+                resultsElement.classList.add('open');
+            } else { resultsElement.classList.remove('open'); }
+        });
+        // Close dropdown if clicking outside
+        document.addEventListener('click', (event) => {
+             if (!inputElement.contains(event.target) && !resultsElement.contains(event.target)) {
+                 resultsElement.classList.remove('open');
+             }
+         });
+    }
+
+    // --- TOOL MANAGEMENT ---
+    setupSearch(toolSearchInput, toolSearchResults, (tool) => {
+        if (!addedTools.includes(tool.name)) {
+            addedTools.push(tool.name);
+            renderTools();
+        }
+    });
+    function renderTools() {
+        toolPillContainer.innerHTML = '';
+        addedTools.forEach(toolName => {
+            const pill = document.createElement('div');
+            pill.className = 'pill';
+            pill.innerHTML = `<span>${toolName}</span><button type="button" data-tool-name="${toolName}">&times;</button>`;
+            pill.querySelector('button').addEventListener('click', (e) => {
+                addedTools = addedTools.filter(name => name !== e.currentTarget.dataset.toolName);
+                renderTools();
+            });
+            toolPillContainer.appendChild(pill);
+        });
+    }
+
+    // --- TEAM MEMBER MANAGEMENT ---
+    setupSearch(memberSearchInput, memberSearchResults, (user) => {
+        if (!addedMembers.some(member => member.id === user.id)) {
+            addedMembers.push(user);
+            renderMembers();
+        }
+    });
+    function renderMembers() {
+        memberCardContainer.innerHTML = '';
+        addedMembers.forEach(user => {
+            const card = document.createElement('div');
+            card.className = 'team-member-card';
+            card.innerHTML = `
+                <div class="avatar"><i class="fa-solid fa-user"></i></div>
+                <div class="team-member-info">
+                    <strong>${user.full_name}</strong>
+                    <span>${user.email} - Year ${user.year || 'N/A'}</span>
+                </div>
+                <button type="button" class="remove-member-btn" data-user-id="${user.id}">&times;</button>
+            `;
+            card.querySelector('.remove-member-btn').addEventListener('click', (e) => {
+                addedMembers = addedMembers.filter(member => member.id !== parseInt(e.currentTarget.dataset.userId));
+                renderMembers();
+            });
+            memberCardContainer.appendChild(card);
+        });
+    }
+
+    // --- FORM SUBMISSION ---
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        statusMessageDiv.textContent = 'Creating project...';
+        statusMessageDiv.className = 'success';
+        const projectData = {
+            creator_id: CURRENT_USER_ID,
+            name: document.getElementById('project-name').value,
+            description: document.getElementById('project-description').value,
+            start_date: document.getElementById('project-start-date').value,
+            status: document.getElementById('project-status').value,
+            project_type: document.getElementById('project-type').value,
+            tools: addedTools,
+            members: addedMembers.map(user => user.id)
+        };
+        const result = await apiFetch('/api/projects/create', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(projectData)
+        });
+        if (result && result.success) {
+            statusMessageDiv.textContent = 'Project created successfully! Redirecting...';
+            statusMessageDiv.className = 'success';
+            form.reset();
+            addedTools = []; addedMembers = [];
+            renderTools(); renderMembers();
+            setTimeout(() => { window.location.href = 'myprojects.html'; }, 2000);
+        } else {
+            statusMessageDiv.textContent = result ? result.message : 'Failed to create project.';
+            statusMessageDiv.className = 'error';
+        }
+    });
+
+    // --- Initial Load ---
+    // (No data needs to be pre-loaded on this page)
+    // We might want to add a loadInstitutes() call if that becomes relevant later
+
+  </script>
+</body>
+</html>

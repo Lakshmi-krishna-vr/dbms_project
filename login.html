@@ -4,109 +4,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* Simple CSS for centering and basic styling, adapted for 16:9 on phones */
-        :root{
-            --card-max-width: 420px;
-            --card-padding: 16px;
-            --bg: #f4f4f4;
-            --primary: #007bff;
-            --primary-dark: #0056b3;
+        :root {
+            --bg: #0f0420; --card-bg: #1a1032; --accent: #9b6cff; --accent-dark: #7a52cc;
+            --text: #f3eefc; --muted: #cbbff0; --border-contrast: rgba(255, 255, 255, 0.1);
+            --input-bg: rgba(255, 255, 255, 0.03); --card-elev: 0 8px 30px rgba(0,0,0,0.5);
+            --pill-radius: 999px; --card-radius: 16px;
         }
-
-        html,body{ height:100%; margin:0; }
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: var(--bg);
-        }
-
-        /* Card maintains a 16:9 aspect ratio on most devices */
+        html, body { height: 100%; margin: 0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+        body { display: flex; justify-content: center; align-items: center; background-color: var(--bg); color: var(--text); padding: 20px; box-sizing: border-box; }
         .login-container {
-            background: #fff;
-            padding: var(--card-padding);
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            width: min(92vw, var(--card-max-width));
-            aspect-ratio: 16 / 9;                /* enforce 16:9 ratio */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-sizing: border-box;
-            overflow: hidden;
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
+            padding: 32px 28px; border-radius: var(--card-radius); box-shadow: var(--card-elev);
+            border: 1px solid rgba(255,255,255,0.04); width: min(92vw, 420px);
+            display: flex; flex-direction: column; justify-content: center; align-items: center; box-sizing: border-box;
         }
-
-        /* Form fills the card but keeps comfortable spacing */
-        form#loginForm {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-        }
-
-        h2 { margin: 0 0 8px 0; }
-
+        form#loginForm { width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 16px; }
+        h2 { margin: 0 0 16px 0; font-size: 2rem; color: var(--text); }
+        .input-group { position: relative; width: 100%; }
+        .input-group i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--muted); }
         input[type="text"], input[type="password"] {
-            width: 90%;
-            max-width: 360px;
-            padding: 10px;
-            margin: 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
+            width: 100%; padding: 12px 12px 12px 45px; background: var(--input-bg);
+            border: 1px solid rgba(255,255,255,0.04); border-radius: 10px; color: var(--text);
+            font-size: 1rem; box-sizing: border-box; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
-
-        button {
-            width: 90%;
-            max-width: 360px;
-            padding: 10px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+        input[type="text"]:focus, input[type="password"]:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(155, 108, 255, 0.18); }
+        button[type="submit"] {
+            width: 100%; padding: 12px 20px; background: var(--accent); color: var(--text);
+            border: none; border-radius: var(--pill-radius); cursor: pointer;
+            font-weight: 600; font-size: 1rem; transition: background-color 0.2s ease; margin-top: 8px;
         }
-        button:hover { background-color: var(--primary-dark); }
+        button[type="submit"]:hover { background-color: var(--accent-dark); }
+        #message { margin-top: 8px; color: #ff6b6b; font-size: 0.95rem; text-align: center; min-height: 1.2em; }
+        #message.success { color: #63e6be; }
 
-        #message { margin-top: 8px; color: red; font-size: 0.95rem; text-align: center; }
-
-        /* If the viewport is very short (some landscape phones), allow the card to adapt */
-        @media (max-height: 420px) {
-            .login-container {
-                aspect-ratio: auto;
-                max-height: 90vh;
-                padding: 12px;
-            }
-            form#loginForm { gap:6px; }
-            h2 { font-size: 1.1rem; }
-            input, button { padding:8px; }
-        }
-
-        /* On very narrow screens keep comfortable spacing and readable text */
-        @media (max-width: 360px) {
-            .login-container { width: 95vw; }
-            input, button { width: 95%; }
-        }
+        .register-link { margin-top: 20px; font-size: 0.9rem; color: var(--muted); }
+        .register-link a { color: var(--accent); text-decoration: none; font-weight: 600; }
+        .register-link a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
     <div class="login-container">
         <h2>Login</h2>
         <form id="loginForm">
-            <input type="text" id="username" placeholder="Username" required>
-            <input type="password" id="password" placeholder="Password" required>
+            <div class="input-group">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" id="username" placeholder="Username" required>
+            </div>
+            <div class="input-group">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
             <button type="submit">Log In</button>
             <p id="message"></p>
         </form>
+
+        <p class="register-link">
+            Don't have an account?
+            <a href="register.html">Let's make one</a>
+        </p>
     </div>
 
-    <script src="login.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const usernameInput = document.getElementById('username').value;
+            const passwordInput = document.getElementById('password').value;
+            const messageElement = document.getElementById('message');
+
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: usernameInput,
+                        password: passwordInput
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    messageElement.textContent = data.message;
+                    messageElement.classList.add('success');
+
+                    // STORE THE LOGGED-IN USER'S ID
+                    localStorage.setItem('skillLinkUserID', data.user_id);
+
+                    setTimeout(() => {
+                        window.location.href = 'index.html'; // Redirect to home page
+                    }, 1000);
+                } else {
+                    messageElement.textContent = data.message;
+                    messageElement.classList.add('error');
+                    messageElement.classList.remove('success'); // Ensure success class is removed on error
+                }
+            } catch (error) {
+                console.error('Login failed:', error);
+                messageElement.textContent = 'An error occurred. Please try again.';
+                messageElement.classList.add('error');
+                messageElement.classList.remove('success');
+            }
+        });
+    </script>
 </body>
 </html>

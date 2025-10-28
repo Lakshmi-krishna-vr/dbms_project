@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Projects</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+         
+    <link rel="stylesheet" href="styles.css"> <link rel="stylesheet" href="myprojects.css"> <style>
+        /* This is the style block from your uploaded myprojects.html file */
+        :root {
+            --bg: #0f0420;
+            --card: #0f0420;
+            --accent: #9b6cff;
+            --text: #f3eefc;
+            ----muted: #cbbff0;
+            --pill-radius: 999px;
+            --max-width: 920px;
+            --gap: 14px;
+            --nav-height: 60px;
+            --border-contrast: rgba(255,255,255,0.1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background-color: var(--bg);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text);
+            padding-bottom: calc(var(--nav-height) + 24px);
+        }
+        h1 { text-align: center; margin-bottom: 30px; font-size: 2.5rem; color: var(--text); }
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            padding: 28px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+        .controls { display: flex; gap: var(--gap); margin-bottom: 30px; flex-wrap: wrap; }
+        .search-bar { flex: 1; position: relative; min-width: 200px; }
+        .search-bar input {
+            width: 100%; padding: 10px 12px 10px 40px;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 10px; color: var(--text); outline: none;
+        }
+        .search-bar i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--muted); }
+        .add-project-btn {
+            padding: 10px 20px; background: var(--accent); color: var(--text);
+            border: none; border-radius: var(--pill-radius); cursor: pointer;
+            display: flex; align-items: center; gap: 8px; font-weight: 600;
+            text-decoration: none; /* Added for 'a' tag */
+        }
+        .project-list { display: grid; gap: var(--gap); }
+        .project-card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            border-radius: 16px; padding: 20px; border: 1px solid rgba(255,255,255,0.04);
+            text-decoration: none; /* [NEW] Remove underline from link */
+            display: block; /* [NEW] Make the 'a' tag behave like a div */
+            transition: transform .14s ease, box-shadow .14s ease; /* [NEW] Add hover effect */
+        }
+        .project-card:hover{
+            transform: translateY(-6px);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.55);
+        }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .project-title { font-weight: bold; font-size: 1.2rem; color: var(--text); }
+        .project-date { color: var(--muted); font-size: 0.9rem; }
+        .project-description { margin-bottom: 20px; line-height: 1.45; color: var(--muted); }
+        .card-footer { display: flex; align-items: center; gap: 15px; }
+        progress { flex: 1; height: 8px; border-radius: var(--pill-radius); -webkit-appearance: none; appearance: none; overflow: hidden; background: rgba(255,255,255,0.03); }
+        progress::-webkit-progress-value { background-color: var(--accent); border-radius: var(--pill-radius); }
+        progress::-moz-progress-bar { background-color: var(--accent); border-radius: var(--pill-radius); }
+        
+        /* Updated status tag styles to match myprojects.css */
+        .status-tag{
+            padding: 6px 10px; border-radius:999px; font-size:0.82rem;
+            font-weight:600; color:var(--text); white-space:nowrap;
+        }
+        .status-In-Progress{ background: linear-gradient(90deg,#6f6df0,#9d6cd3); }
+        .status-Planned{ background: linear-gradient(90deg,#ffba66,#ff9a3d); color:#1a1320; }
+        .status-Completed{ background: linear-gradient(90deg,#37d67a,#00c853); }
+
+        .team-avatars { display: flex; margin-left: auto; }
+        .avatar {
+            width: 30px; height: 30px; border-radius: 50%;
+            margin-left: -10px; border: 2px solid var(--card);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.6);
+        }
+        /* Bottom nav styles */
+        .bottom-nav {
+            position:fixed; left:0 !important; right:0 !important; bottom:0 !important;
+            width:100% !important; margin:0 !important; border-radius:0 !important;
+            padding:8px 12px !important; box-shadow:0 -6px 30px rgba(0,0,0,0.6);
+            display:flex; justify-content:space-between; align-items:center; gap:6px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
+            backdrop-filter: blur(6px); z-index:9999;
+        }
+        .bottom-nav .nav-item {
+            flex: 1; text-align: center; padding: 8px 6px; border-radius: 8px;
+            color: var(--muted); text-decoration: none; display: flex;
+            flex-direction: column; align-items: center; gap: 4px;
+            transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+        }
+        .bottom-nav .nav-item i { font-size: 18px; }
+        .bottom-nav .nav-item span { font-size: 0.82rem; }
+        .bottom-nav .nav-item.active { background: rgba(155,108,255,0.12); color: var(--text); }
+        .bottom-nav .nav-item:not(.active):hover { color: var(--text); }
+    </style>
+</head>
+<body>
+    <h1>MY PROJECTS</h1>
+    <div class="container">
+        <div class="controls">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="project-search-input" placeholder="Search projects...">
+            </div>
+            <a href="add-project.html" class="add-project-btn">
+                <i class="fas fa-plus"></i>
+                Add New Project
+            </a>
+        </div>
+
+        <div class="project-list" id="project-list-container">
+            <p style="text-align:center; color: var(--muted);">Loading projects...</p>
+        </div>
+    </div>
+
+    <nav class="bottom-nav" role="navigation" aria-label="Primary">
+      <a href="index.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Home</span></a>
+      <a href="search.html" class="nav-item"><i class="fa-solid fa-compass"></i><span>Explore</span></a>
+      <a href="myprojects.html" class="nav-item active"><i class="fa-solid fa-folder"></i><span>Projects</span></a>
+      <a href="profile.html" class="nav-item"><i class="fa-solid fa-user"></i><span>Profile</span></a>
+    </nav>
+
+    <script>
+        // --- Helper Functions (unchanged) ---
+        function getStatusClass(status) {
+            if (!status) return 'status-Planned';
+            return `status-${status.replace(/\s+/g, '-')}`;
+        }
+        function getProgressValue(status) {
+            if (status === 'Completed') return 100;
+            if (status === 'In Progress') return 50;
+            if (status === 'Planned') return 10;
+            return 0;
+        }
+        function formatDate(isoDate) {
+            if (!isoDate) return 'No date';
+            return new Date(isoDate).toLocaleDateString('en-US', {
+                month: 'short', day: 'numeric', year: 'numeric'
+            });
+        }
+
+        // --- [UPDATED] Main function with search support ---
+        async function loadProjects(searchQuery = '') {
+            const container = document.getElementById('project-list-container');
+            container.innerHTML = '<p style="text-align:center; color: var(--muted);">Loading projects...</p>';
+            
+            try {
+                const response = await fetch(`/api/projects?q=${encodeURIComponent(searchQuery)}`);
+                if (!response.ok) throw new Error('Failed to fetch projects');
+                
+                const projects = await response.json();
+                container.innerHTML = '';
+                
+                if (projects.length === 0) {
+                    if (searchQuery) {
+                        container.innerHTML = `<p style="text-align:center; color: var(--muted);">No projects found matching "${searchQuery}".</p>`;
+                    } else {
+                        container.innerHTML = '<p style="text-align:center; color: var(--muted);">No projects found. Add one!</p>';
+                    }
+                    return;
+                }
+
+                projects.forEach(project => {
+                    const avatarsHtml = project.members.map(member => {
+                        return `<img src="https://i.pravatar.cc/100?img=${member.id}" alt="${member.full_name}" class="avatar">`;
+                    }).join('');
+                    
+                    const statusClass = getStatusClass(project.status);
+                    const progressValue = getProgressValue(project.status);
+                    const card = document.createElement('a');
+                    card.className = 'project-card';
+                    card.href = `project-details.html?id=${project.id}`;
+                    
+                    card.innerHTML = `
+                        <div class="card-header">
+                            <div class="project-title">${project.name}</div>
+                            <div class="project-date">${formatDate(project.start_date)}</div>
+                        </div>
+                        <div class="project-description">
+                            ${project.description}
+                        </div>
+                        <div class="card-footer">
+                            <progress value="${progressValue}" max="100"></progress>
+                            <span class="status-tag ${statusClass}">${project.status}</span>
+                            <div class="team-avatars">
+                                ${avatarsHtml}
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error('Error loading projects:', error);
+                container.innerHTML = '<p style="text-align:center; color: #ff6b6b;">Error loading projects. Please try again.</p>';
+            }
+        }
+
+        // --- [NEW] Event Listener setup ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('project-search-input');
+            let searchTimeout;
+
+            // Load all projects when the page first loads
+            loadProjects();
+
+            // Add an event listener to the search bar
+            searchInput.addEventListener('input', (e) => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    loadProjects(e.target.value);
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>
